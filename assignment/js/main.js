@@ -44,11 +44,18 @@ var parseData = function(data) {
   var step1 = JSON.parse(data);
   var step2 = step1.features;
   var step3 = [];
-  for (var key in step2) {
-    step3.push({LATITUDE: _.propertyOf(step2[key].geometry)('coordinates')[1],
-                LONGITUDE: _.propertyOf(step2[key].geometry)('coordinates')[0],
-                PROJECTNAME: _.propertyOf(step2[key].properties)('PROJECTNAME')});
-            }
+
+  _.each(step2, function(key) {
+    step3.push({LATITUDE: _.propertyOf(key.geometry)('coordinates')[1],
+                LONGITUDE: _.propertyOf(key.geometry)('coordinates')[0],
+                PROJECTNAME: _.propertyOf(key.properties)('PROJECTNAME')});
+  });
+
+  //for (var key in step2) {
+    //step3.push({LATITUDE: _.propertyOf(step2[key].geometry)('coordinates')[1],
+                //LONGITUDE: _.propertyOf(step2[key].geometry)('coordinates')[0],
+                //PROJECTNAME: _.propertyOf(step2[key].properties)('PROJECTNAME')});
+            //}
   return step3;
 };
 
@@ -64,9 +71,14 @@ var makeMarkers = function(elem) {
   var description = $("#text-input4").val();
   var color = $("#color-input").val();
   var step4 = [];
-  for(var key in elem) {
-      step4.push(L.circleMarker([elem[key][lat], elem[key][lon]], {color: color}).bindPopup(description));
-      }
+
+  _.each(elem, function(key) {
+      step4.push(L.circleMarker([key[lat], key[lon]], {color: color}).bindPopup(description));
+  });
+
+  //for(var key in elem) {
+      //step4.push(L.circleMarker([elem[key][lat], elem[key][lon]], {color: color}).bindPopup(description));
+      //}
   return step4;
 };
 
