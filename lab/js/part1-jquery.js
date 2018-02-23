@@ -170,6 +170,49 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
 // This is a popular pattern that you'll run into in programs that run jQuery. It says not to run
 // the function passed to `ready` until the HTML document is fully loaded and all scripts have
 // been interpreted. It is, therefore, an example of asynchronous behavior.
+var funct = function() {
+  var title = $("#text-input1").val();
+  var name = $("#text-input2").val();
+  var address = $("#text-input3").val();
+  var number = $("#numeric-input").val();
+  var form = {Title: title, Name: name, Address: address, Number: number};
+  return form;
+};
+
+var mapping = function (x) {
+  var lat = $("#numeric-inputs").val();
+  var lon = $("#numeric-inputed").val();
+  var description = $("#text-input4").val();
+  var color = $("#color-input").val();
+  var icon = L.divIcon($('.leaflet-marker-icon'));
+
+  L.circleMarker([lat, lon], {color: color}).bindPopup(description).addTo(map);
+  //L.marker([lat, lon], {color: color}, {icon: icon}).bindPopup(description).addTo(map);
+};
+//console.log(funct());
+
 $(document).ready(function() {
-  // Do your stuff here
+  $("#main-heading").text("Search the Data");
+  $("#text-label1").text("Search by Title");
+    $("#text-input1").val("Public Buildings").prop('disabled', false).attr("value", "All");
+  $("#text-label2").text("Search by Name");
+    $("#text-input2").val("City Hall").prop('disabled', false).attr("value", "All");
+  $("#text-label3").text("Search by Address");
+    $("#text-input3").val("1500 Market Street").prop('disabled', false).attr("value", "All");
+  $("#number-label").text("Number");
+    $("#numeric-input").val(1500).prop('disabled', false).attr("value", 0);
+  $("#checkbox-label1").text("Save Addresses");
+    $("#cbox-input1").prop('disabled', false).prop('checked', true);
+  $("#checkbox-label2").text("Download");
+    $("#cbox-input2").prop('disabled', false).prop('checked', true);
+  $("#color-label").text("Choose Style");
+    $("#color-input").val('#8B008B');
+  $("#main-heading2").text("Map the Data");
+  $("#number-labels").text("Latitude");
+    $("#numeric-inputs").val(39.952450);
+  $("#number-labeled").text("Longitude");
+    $("#numeric-inputed").val(-75.163631);
+  $("#text-label4").text("Search by Address");
+    $("#text-input4").val("Philadelphia City Hall");
+  $("button").text("Map It").click(function() { mapping();} );
 });
